@@ -1,6 +1,9 @@
 package com.ar.cac.tpfinal.services;
 
+import com.ar.cac.tpfinal.entities.User;
 import com.ar.cac.tpfinal.entities.dtos.UserDto;
+import com.ar.cac.tpfinal.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -10,23 +13,26 @@ import java.util.List;
 @Service
 public class UserService {
 
-    public List<String> getUsers(){
-        List<String> users = new ArrayList<String>();
-        users.add("Cristian");
-        users.add("Maximiliano");
-        users.add("Solana");
+    @Autowired
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository){
+        this.repository = repository;
+    }
+
+    public List<User> getUsers(){
+        List<User> users = repository.findAll();
         return users;
     }
 
-    public String getUserById(Long id){
-        List<String> users = this.getUsers();
-
-        return users.get(0);
+    public User getUserById(Long id){
+        User user = repository.findById(id).get();
+        return user;
     }
 
     public UserDto createUser(UserDto user){
-        List<String> users = this.getUsers();
-        users.add(user.getUsername());
+        //List<String> users = this.getUsers();
+        //users.add(user.getUsername());
         return user;
     }
 

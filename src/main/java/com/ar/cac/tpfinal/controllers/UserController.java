@@ -1,5 +1,6 @@
 package com.ar.cac.tpfinal.controllers;
 
+import com.ar.cac.tpfinal.entities.User;
 import com.ar.cac.tpfinal.entities.dtos.UserDto;
 import com.ar.cac.tpfinal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UserController {
     // Obtener una lista de usuarios registrados
 
     @GetMapping(value = "/users")
-    public List<String> getUsers(){
+    public List<User> getUsers(){
         return service.getUsers();
     }
 
@@ -38,7 +39,7 @@ public class UserController {
 
 
     @GetMapping(value = "/users/{id}")
-    public String getUserById(@PathVariable Long id){
+    public User getUserById(@PathVariable Long id){
         //return "Cristian";
         return service.getUserById(id);
     }
