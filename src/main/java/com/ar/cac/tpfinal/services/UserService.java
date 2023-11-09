@@ -2,6 +2,7 @@ package com.ar.cac.tpfinal.services;
 
 import com.ar.cac.tpfinal.entities.User;
 import com.ar.cac.tpfinal.entities.dtos.UserDto;
+import com.ar.cac.tpfinal.mappers.UserMapper;
 import com.ar.cac.tpfinal.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,7 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private final UserRepository repository;
+    private UserRepository repository;
 
     public UserService(UserRepository repository){
         this.repository = repository;
@@ -27,14 +27,26 @@ public class UserService {
 
     public User getUserById(Long id){
         User user = repository.findById(id).get();
+        user.setPassword("******");
         return user;
     }
 
     public UserDto createUser(UserDto user){
-        //List<String> users = this.getUsers();
-        //users.add(user.getUsername());
+        User entity = UserMapper.dtoTouser(user);
+        User entitySaved = repository.save(entity);
+        user = UserMapper.userToDto(entitySaved);
+        user.setPassword("******");
         return user;
     }
 
-
+    public String deleteUser(Long id){
+        if (repository.existsById(id)){
+            repository.deleteById(id);
+            return "El usuario con id: " + id + " ha sido eliminado";
+        } else {
+            return "El usuario con id: " + id + ", no ha sido eliminado";
+        }
     }
+
+
+}
