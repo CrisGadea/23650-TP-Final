@@ -1,10 +1,9 @@
 package com.ar.cac.tpfinal.repositories;
 
-import com.ar.cac.tpfinal.entities.User;
+import com.ar.cac.tpfinal.entities.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
-    User findByEmail(String email);
+public interface AccountRepository extends JpaRepository<Account, Long> {
 }
